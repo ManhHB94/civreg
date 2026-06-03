@@ -9,9 +9,7 @@
 {viewerjumpto "References"     "civreg##references"}{...}
 {viewerjumpto "Author"         "civreg##author"}{...}
 
-{hline}
 help for {help civreg}{right:Manh Hoang-Ba (hbmanh9492@gmail)}
-{hline}
 
 {title:Title}
 
