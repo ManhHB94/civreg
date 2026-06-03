@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.0  02jun2026}{...}
+{* *! version 2.0.1  03jun2026}{...}
 {viewerjumpto "Syntax"         "civreg##syntax"}{...}
 {viewerjumpto "Description"    "civreg##description"}{...}
 {viewerjumpto "Method"         "civreg##method"}{...}
@@ -8,6 +8,8 @@
 {viewerjumpto "Examples"       "civreg##examples"}{...}
 {viewerjumpto "References"     "civreg##references"}{...}
 {viewerjumpto "Author"         "civreg##author"}{...}
+
+								Manh Hoang-Ba (hbmanh9492@gmail)
 
 {title:Title}
 
@@ -65,16 +67,14 @@ version 2.1.15 or later, and relevant STATA packages.
 
 {title:Install and update}
 
-{pstd}
-To install {helpb civreg}, type:
-
+{pstd}To install {helpb civreg}, type:{p_end}
 {phang2}. {stata `"ssc install civreg"'}{p_end}
 {phang2}. {stata `"net install civreg, from("https://raw.githubusercontent.com/ManhHB94/civreg/main/")"'}{p_end}
 
 {pstd}
-The latest version of {cmd:civreg} can be found at the following link: {browse "https://github.com/ManhHB94/":https://github.com/ManhHB94/}{p_end}
+The latest version of {helpb civreg} can be found at the following link: {browse "https://github.com/ManhHB94/":https://github.com/ManhHB94/}{p_end}
 
-{pstd}To update the {cmd:civreg} package to the latest version, run either of the following commands{p_end}
+{pstd}To update the {helpb civreg} package to the latest version, run either of the following commands{p_end}
 {phang2}. {stata `"ado update civreg, update"'}{p_end}
 {phang2}. {stata `"ssc install civreg, replace"'}{p_end}
 {phang2}. {stata `"net install civreg, from("https://raw.githubusercontent.com/ManhHB94/civreg/main/") replace"'}{p_end}
@@ -91,7 +91,7 @@ to the research community, like a paper. Please cite it as such: {p_end}
 {title:Description}
 
 {pstd}
-{cmd:civreg} estimates linear models with endogenous regressors using the
+{helpb civreg} estimates linear models with endogenous regressors using the
 Coplanar/Synthetic Instrumental Variables (CIV) method proposed by
 Dzhumashev and Tursunalieva (2025).
 
@@ -128,7 +128,7 @@ coplanar instrument simultaneously satisfies:
 
 {pstd}
 The identified coplanar instrument is then supplied to
-{cmd:ivreg2} for standard IV/2SLS estimation.
+{helpb ivreg2} for standard IV/2SLS estimation.
 
 {marker method}{...}
 {title:Method}
@@ -188,7 +188,7 @@ proposed in Dzhumashev and Tursunalieva (2025).
 
 {pstd}
 The resulting coplanar instrument is treated as a generated
-instrument and passed to {cmd:ivreg2} for final estimation.
+instrument and passed to {helpb ivreg2} for final estimation.
 
 {pstd}
 When option {cmd:fe} or {cmd:twfe} is specified, the fixed-effects
@@ -284,18 +284,14 @@ algorithm when option {cmd:twfe} is specified.
 {pstd}
 {helpb civreg} does not currently support factor-variable notation or
 time-series operators directly inside the command syntax.
-
-{pstd}
-Users should generate transformed variables manually before estimation.
-
+Users should generate transformed variables manually before estimation.{p_end}
 {phang2}{cmd:. generate Lx = L.x}{p_end}
 {phang2}{cmd:. tabulate group, generate(g_)}{p_end}
 
 {pstd}
 Options {cmd:fe} and {cmd:twfe} require panel data declared by
 {helpb xtset}. Both panel and time identifiers must be specified before
-estimation.
-
+estimation.{p_end}
 {phang2}{cmd:. xtset} {it:panelvar timevar}{p_end}
 
 {pstd}
@@ -306,8 +302,7 @@ and performing calculations on group means. See Examples below for details.
 
 {pstd}
 The R programming language and {helpb rcall} package must be installed
-when option {cmd:rcode} is specified. To install {helpb rcall}, type:
-
+when option {cmd:rcode} is specified. To install {helpb rcall}, type:{p_end}
 {phang2}. {stata `"net install github, from("https://haghish.github.io/github/")"'}{p_end}
 {phang2}. {stata `"github install haghish/rcall, stable"'}{p_end}
 
@@ -315,8 +310,8 @@ when option {cmd:rcode} is specified. To install {helpb rcall}, type:
 {title:Saved results}
 
 {pstd}
-{cmd:civreg} stores all standard estimation results returned by
-{cmd:ivreg2} in {cmd:e()}.
+{helpb civreg} stores all standard estimation results returned by
+{helpb ivreg2} in {cmd:e()}.
 
 {pstd}
 In addition, the following are stored:

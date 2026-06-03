@@ -15,12 +15,14 @@ Versions:
                    + add option radd: CIV + IIDN(0, sd(x))
                    + adjust create IV in case hete(1) and hete(2), follow Ratbek's feedback
 				   
+* 06/03/26 - 2.0.1 + Halperin APM: `var'1, `var'2, m_i, m_t, dif --> tempvar
+
 ==============================================================================*/
 
 cap pro drop civreg
 pro def civreg, eclass byable(recall)
 
-	version 11
+	version 12
 
 	
 // Needed for call to ivreg2
@@ -235,7 +237,7 @@ di as error /*
 				
 			}
 			
-		//	Two-Way FE: Halperin APM
+//	Two-Way FE: Halperin APM
 			else {
 
 				qui levelsof `tvar' if `touse' , local(tvarnames)
@@ -258,6 +260,8 @@ di as error /*
 						gen double ``var'0' = `var' if `touse'
 					}
 					
+					tempvar m_i m_t dif
+					
 					local iter = 0
 					
 					while `iter' <= `maxiter' {
@@ -265,20 +269,22 @@ di as error /*
 						local maxdif = 0
 						
 						qui foreach var of varlist `lhs' `endo' `inexog' `exexog' {
+							
+							tempvar `var'1 `var'2
 // time-demean
-							egen double m_i  = mean(``var'0') if `touse' , by(`ivar')
-							gen double `var'1 = ``var'0' - m_i if `touse'
-							
+							egen double `m_i'  = mean(``var'0') if `touse' , by(`ivar')
+							gen double ``var'1' = ``var'0' - `m_i' if `touse'
+						
 // group-demean
-							egen double m_t  = mean(`var'1) if `touse' , by(`tvar')
-							gen double `var'2 = `var'1 - m_t if `touse'
+							egen double `m_t'  = mean(``var'1') if `touse' , by(`tvar')
+							gen double ``var'2' = ``var'1' - `m_t' if `touse'
 							
-							gen double dif = abs(`var'2 - ``var'0') if `touse'
-							sum dif , mean
+							gen double `dif' = abs(``var'2' - ``var'0') if `touse'
+							sum `dif' , mean
 							local maxdif = max(`maxdif', r(max))
 							
-							replace ``var'0' = `var'2 if `touse'
-							cap drop m_i m_t dif `var'1 `var'2
+							replace ``var'0' = ``var'2' if `touse'
+							cap drop `m_i' `m_t' `dif' ``var'1' ``var'2'
 							
 						}
 						
