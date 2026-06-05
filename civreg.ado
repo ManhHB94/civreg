@@ -16,13 +16,14 @@ Versions:
                    + adjust create IV in case hete(1) and hete(2), follow Ratbek's feedback
 				   
 * 06/03/26 - 2.0.1 + Halperin APM: `var'1, `var'2, m_i, m_t, dif --> tempvar
+* 06/05/26 - 2.1.0 + Pham Anh Ton comment: return(.) must be outside the "for" loop!
 
 ==============================================================================*/
 
 cap pro drop civreg
 pro def civreg, eclass byable(recall)
 
-	version 12
+	version 11
 
 	
 // Needed for call to ivreg2
@@ -927,10 +928,15 @@ real scalar find_first_sign_change(real colvector x)
         if (diff_signs[i] != 0) {
 			return(i + 1)
 		}
+
+/* Pham Anh Ton comment: return(.) must be outside the "for" loop!
 		else {
 			return(.)			
 		}
+*/		
     }
+	
+	return(.)
 
 }
 

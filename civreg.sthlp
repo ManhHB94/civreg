@@ -370,7 +370,8 @@ ivreg2: Stata module for extended instrumental variables/2SLS, GMM and AC/HAC, L
 {browse "http://ideas.repec.org/c/boc/bocode/s425401.html":http://ideas.repec.org/c/boc/bocode/s425401.html}
 
 {phang}
-Dzhumashev, R., Tursunalieva, A. 2025.  A synthetic instrumental variable method: Using the dual tendency condition for coplanar instruments. {browse "https://doi.org/10.48550/arXiv.2512.17301":https://doi.org/10.48550/arXiv.2512.17301}.
+Dzhumashev, R., Tursunalieva, A. 2025.  A synthetic instrumental variable method: Using the dual tendency condition for coplanar instruments. 
+arXiv preprint arXiv:2512.17301. {browse "https://doi.org/10.48550/arXiv.2512.17301":https://doi.org/10.48550/arXiv.2512.17301}.
 
 {phang}
 Haghish, E.F. 2021.  Integrating R machine learning algorithms in Stata using rcall. UK Stata Conference 2021, StataCorp. 
