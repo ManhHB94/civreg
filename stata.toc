@@ -1,4 +1,4 @@
-v 2.1.0
+v 2.1.1
 d Package index for civreg
-d Updated: 05 June 2026
+d Updated: 06 June 2026
 p civreg
