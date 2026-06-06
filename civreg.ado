@@ -16,7 +16,10 @@ Versions:
                    + adjust create IV in case hete(1) and hete(2), follow Ratbek's feedback
 				   
 * 06/03/26 - 2.0.1 + Halperin APM: `var'1, `var'2, m_i, m_t, dif --> tempvar
-* 06/05/26 - 2.1.0 + Pham Anh Ton comment: return(.) must be outside the "for" loop!
+* 06/05/26 - 2.1.0 + Pham Anh Ton comments in find_first_sign_change():
+                     - return(.) must be outside the "for" loop!
+* 06/06/26 - 2.1.1 + d0 formula generalized by Pham Anh Ton
+                     - d0 = d_or + (find_min_pos() - 1) * delt
 
 ==============================================================================*/
 
@@ -936,7 +939,7 @@ real scalar find_first_sign_change(real colvector x)
 */		
     }
 	
-	return(.)
+	return(.)	// ver 2.1.0
 
 }
 
@@ -1314,8 +1317,11 @@ real scalar find_d0_boot(
 
                         d = d + delt
                 }
-                d0 = find_min_pos(m1) * delt
-                d0i[l] = d0
+
+// d0 formula generalized by Pham Anh Ton
+//                d0 = find_min_pos(m1) * delt
+                d0 = d_or + (find_min_pos(m1) - 1) * delt	// ver 2.1.1
+				d0i[l] = d0
         }
 		
         return(mean(d0i))

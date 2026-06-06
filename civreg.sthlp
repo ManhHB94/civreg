@@ -43,7 +43,7 @@ Most options supported by {helpb ivreg2} may also be specified.
 {synopt:{opt reps(#)}}bootstrap replications used to select optimal {it:d0}; default is {cmd:reps(50)}{p_end}
 {synopt:{opt plus:rand}}specifies that an independent random disturbance with zero mean
 and variance equal to the variance of the endogenous variable is added to the SIV variable.{p_end}
-{synopt:{opt rcode}}uses R programming language (via {cmd:rcall}) for random number generation to exactly reproduce R results{p_end}
+{synopt:{opt rcode}}uses R programming language (via {helpb rcall}) for random number generation to exactly reproduce R results{p_end}
 
 {syntab:FE options}
 
@@ -354,12 +354,18 @@ In addition, the following are stored:
 {phang2}{it:Two-way fixed-effects CIV estimation:}{p_end}
 {phang2}{stata ". civreg n (k w = ) ys if year > 1977 & year < 1983 , twfe"}{p_end}
 
-{phang2}{it:Predict a_i and v_t in} {cmd:balanced panel data} {it:case:}{p_end}
+{phang2}{it:Predict a_i and v_t in} {cmd:{it:balanced panel data}} {it:case:}{p_end}
 {phang2}{stata ". predict double avu if e(sample) , resid"}{p_end}
 {phang2}{stata ". qui sum avu if e(sample), mean"}{p_end}
 {phang2}{stata ". scalar avu_m = r(mean)"}{p_end}
 {phang2}{stata ". egen double a_i = mean(avu - `=avu_m') if e(sample), by(id)"}{p_end}
 {phang2}{stata ". egen double v_t = mean(avu - `=avu_m') if e(sample), by(year)"}{p_end}
+
+{title:Acknowledgements}
+
+{p 0 4}The author is grateful to Ratbek Dzhumashev, corresponding author of the Coplanar (Synthetic) Instrumental Variable (CIV) methodology,
+for his generous assistance and valuable clarifications regarding the coplanar-instrument search algorithm. 
+The author also thanks Stata users for their helpful comments, suggestions, and feedback, which have contributed to the development and improvement of {helpb civreg}.
 
 {marker references}{...}
 {title:References}
