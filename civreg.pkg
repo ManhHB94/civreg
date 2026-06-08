@@ -1,6 +1,6 @@
-v 2.1.1
+v 2.1.2
 d civreg — Stata module to perform coplanar/synthetic instrumental variables regression
 d Author: Manh Hoang-Ba
-d Version: 2.1.1 06 June 2026
+d Version: 2.1.2 08 June 2026
 f civreg.ado
 f civreg.sthlp
