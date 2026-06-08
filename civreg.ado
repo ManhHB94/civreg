@@ -20,6 +20,8 @@ Versions:
                      - return(.) must be outside the "for" loop!
 * 06/06/26 - 2.1.1 + d0 formula generalized by Pham Anh Ton
                      - d0 = d_or + (find_min_pos() - 1) * delt
+* 06/08/26 - 2.1.2 + find_first_sign_change(): return(.) --> return(1) 
+                     when the sign not change
 
 ==============================================================================*/
 
@@ -426,7 +428,7 @@ di as error /*
 
 restore
 
-		qui merge m:1 `mark_id' using `_data', nogen		
+		qui merge 1:1 `mark_id' using `_data', nogen		
 	
 //		Label CIV
 		qui foreach var of local civ {
@@ -939,7 +941,8 @@ real scalar find_first_sign_change(real colvector x)
 */		
     }
 	
-	return(.)	// ver 2.1.0
+//	return(.)	// ver 2.1.0
+	return(1)	// ver 2.1.2
 
 }
 
@@ -1105,7 +1108,7 @@ real matrix make_v012(real scalar sd_x, real scalar N, real scalar seed)
 ================================================================ */
 
 // hete = 0
-real scalar criterion_homo(
+real scalar crit_homo(
         real colvector x_b,
         real colvector civ_b,
 		real scalar nocons
@@ -1125,7 +1128,7 @@ real scalar criterion_homo(
 }
 
 // hete = 1
-real scalar criterion_hete_p(
+real scalar crit_hete_p(
         real colvector x_b,
         real colvector civ_b,
         real scalar nocons
@@ -1136,8 +1139,8 @@ real scalar criterion_hete_p(
         real colvector wgt
         real colvector e_gls, e2_gls
 
-        real scalar ess_o, rss_o
-        real scalar ess_g, rss_g
+        real scalar ess_o, tss_o
+        real scalar ess_g, tss_g
         real scalar chi2_o, chi2_g
         real scalar dv, N
 		N = rows(x_b)
@@ -1156,14 +1159,14 @@ real scalar criterion_hete_p(
         e2_gls = e_gls :^ 2
 
         ess_o = sum((ls_xb(e2_ols, civ_b, 0) :- mean(e2_ols)) :^ 2)
-        rss_o = sum(e2_ols)
+        tss_o = sum(e2_ols)
 
-        chi2_o = (ess_o / 2) / (rss_o / N)^2
+        chi2_o = (ess_o / 2) / (tss_o / N)^2
 
         ess_g = sum((ls_xb(e2_gls, civ_b, 0) :- mean(e2_gls)) :^ 2)
-        rss_g = sum(e2_gls)
+        tss_g = sum(e2_gls)
 
-        chi2_g = (ess_g / 2) / (rss_g / N)^2
+        chi2_g = (ess_g / 2) / (tss_g / N)^2
 
         dv = chi2(1, chi2_g) - chi2(1, chi2_o)
 
@@ -1172,7 +1175,7 @@ real scalar criterion_hete_p(
 }
 
 // hete = 2
-real scalar criterion_hete_n(
+real scalar crit_hete_n(
         real colvector x_b,
         real colvector civ_b,
 		real scalar nocons
@@ -1292,7 +1295,7 @@ real scalar find_d0_boot(
 
                         if (hete == 0) {
 
-                                m1[i] = criterion_homo(
+                                m1[i] = crit_homo(
                                                 x_b,
                                                 civ_b,
 												nocons
@@ -1300,7 +1303,7 @@ real scalar find_d0_boot(
                         }
                         else if (hete == 1) {
 
-                                m1[i] = criterion_hete_p(
+                                m1[i] = crit_hete_p(
                                                 x_b,
                                                 civ_b,
 												nocons
@@ -1308,7 +1311,7 @@ real scalar find_d0_boot(
                         }
                         else if (hete == 2) {
 
-                                m1[i] = criterion_hete_n(
+                                m1[i] = crit_hete_n(
                                                 x_b,
                                                 civ_b,
 												nocons

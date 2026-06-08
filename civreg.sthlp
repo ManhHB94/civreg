@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.0.1  03jun2026}{...}
+{* *! version 2.1.2  08jun2026}{...}
 {viewerjumpto "Syntax"         "civreg##syntax"}{...}
 {viewerjumpto "Description"    "civreg##description"}{...}
 {viewerjumpto "Method"         "civreg##method"}{...}
@@ -9,12 +9,12 @@
 {viewerjumpto "References"     "civreg##references"}{...}
 {viewerjumpto "Author"         "civreg##author"}{...}
 
-help for {help civreg}{right:Manh Hoang-Ba (hbmanh9492@gmail)}
+help for {helpb civreg}{right:Manh Hoang-Ba (hbmanh9492@gmail)}
 
 {title:Title}
 
 {p2colset 5 15 20 2}{...}
-{p2col:{bf:civreg} {hline 2}}Coplanar/synthetic instrumental variables (CIV/SIV) regression{p_end}
+{p2col:{bf:civreg} {hline 2}}Coplanar (synthetic) instrumental variables (CIV/SIV) regression{p_end}
 {p2colreset}{...}
 
 {marker syntax}{...}
@@ -92,8 +92,8 @@ to the research community, like a paper. Please cite it as such: {p_end}
 
 {pstd}
 {helpb civreg} estimates linear models with endogenous regressors using the
-Coplanar/Synthetic Instrumental Variables (CIV) method proposed by
-Dzhumashev and Tursunalieva (2025).
+Coplanar (Synthetic) Instrumental Variables (CIV) method proposed by
+Dzhumashev and Tursunalieva (2025), currently available as an arXiv preprint.
 
 {pstd}
 Unlike conventional instrumental variables estimators, the CIV method
@@ -113,7 +113,7 @@ instrument projected onto that subspace can be represented as
 {pstd}
 where {it:x} is the endogenous regressor, {it:r} is orthogonal to {it:x}
 within the regression plane, {it:d0} is a nuisance parameter, and
-{it:k} = 1 if {it:cov(x,u)>0}, or -1 if {it:cov(x,u)<0}, with {it:u} is the structural error.
+{it:k} = 1 if {it:cov(x,u)} > 0, or -1 if {it:cov(x,u)} < 0, with {it:u} is the structural error.
 
 {pstd}
 The CIV estimator searches for the value of {it:d0} that satisfies the
@@ -249,7 +249,7 @@ obtain the optimal {it:d0}.
 
 {phang}
 {opt rcode} requests random number generation through R programming
-language using {cmd:rcall}.
+language using {helpb rcall}.
 
 {dlgtab:FE options}
 
@@ -282,6 +282,11 @@ algorithm when option {cmd:twfe} is specified.
 {title:Important notes}
 
 {pstd}
+As of the current release of {helpb civreg}, the underlying CIV methodology has not yet undergone formal peer review in a scholarly journal.
+Users are encouraged to carefully evaluate its suitability and robustness for their specific research applications.
+The methodology remains an active area of research and may be subject to further revision and development.{p_end}
+
+{pstd}
 {helpb civreg} does not currently support factor-variable notation or
 time-series operators directly inside the command syntax.
 Users should generate transformed variables manually before estimation.{p_end}
@@ -311,8 +316,7 @@ when option {cmd:rcode} is specified. To install {helpb rcall}, type:{p_end}
 
 {pstd}
 {helpb civreg} stores all standard estimation results returned by
-{helpb ivreg2} in {cmd:e()}.
-
+{helpb ivreg2} in {cmd:e()}.{p_end}
 {pstd}
 In addition, the following are stored:
 
@@ -329,32 +333,32 @@ In addition, the following are stored:
 {marker examples}{...}
 {title:Examples}
 
-{phang2}{it:Load mroz dataset:}{p_end}
+{phang}{it:Load {cmd:mroz} dataset:}{p_end}
 {phang2}{stata ". webuse mroz, clear"}{p_end}
 
-{phang2}{it:Model with one endogenous variable:}{p_end}
+{phang}{it:Model with one endogenous variable:}{p_end}
 {phang2}{stata ". civreg hours (lwage = ) educ age kidslt6 kidsge6 nwifeinc, hete(0) reps(5)"}{p_end}
 
-{phang2}{it:Model with two endogenous variables:}{p_end}
+{phang}{it:Model with two endogenous variables:}{p_end}
 {phang2}{stata ". civreg hours (lwage educ = ) age kidslt6 kidsge6 nwifeinc, hete(1) reps(5)"}{p_end}
 
-{phang2}{it:Reproducing the SIV column results of Table 2 in Dzhumashev and Tursunalieva (2025):}{p_end}
+{phang}{it:Reproducing the SIV column results of Table 2 in Dzhumashev and Tursunalieva (2025):}{p_end}
 {phang2}{stata ". civreg hours (lwage = ) educ age kidslt6 kidsge6 nwifeinc , hete(0) reps(49) small rcode"}{p_end}
 
-{phang2}{it:Load Arellano and Bond (1991) dataset:}{p_end}
+{phang}{it:Load Arellano and Bond (1991) dataset:}{p_end}
 {phang2}{stata ". webuse abdata, clear"}{p_end}
 
-{phang2}{it:Fixed-effects CIV estimation:}{p_end}
+{phang}{it:Fixed-effects CIV estimation:}{p_end}
 {phang2}{stata ". civreg n (k = ) w ys, fe"}{p_end}
 
-{phang2}{it:Predict a_i:}{p_end}
+{phang}{it:Predict a_i:}{p_end}
 {phang2}{stata ". predict double au , resid"}{p_end}
 {phang2}{stata ". egen double a_i = mean(au) , by(id)"}{p_end}
 
-{phang2}{it:Two-way fixed-effects CIV estimation:}{p_end}
+{phang}{it:Two-way fixed-effects CIV estimation:}{p_end}
 {phang2}{stata ". civreg n (k w = ) ys if year > 1977 & year < 1983 , twfe"}{p_end}
 
-{phang2}{it:Predict a_i and v_t in} {cmd:{it:balanced panel data}} {it:case:}{p_end}
+{phang}{it:Predict a_i and v_t in} {cmd:{it:balanced panel data}} {it:case:}{p_end}
 {phang2}{stata ". predict double avu if e(sample) , resid"}{p_end}
 {phang2}{stata ". qui sum avu if e(sample), mean"}{p_end}
 {phang2}{stata ". scalar avu_m = r(mean)"}{p_end}
