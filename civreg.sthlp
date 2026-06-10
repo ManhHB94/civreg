@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 2.1.2  08jun2026}{...}
+{* *! version 2.2.0  10jun2026}{...}
 {viewerjumpto "Syntax"         "civreg##syntax"}{...}
 {viewerjumpto "Description"    "civreg##description"}{...}
 {viewerjumpto "Method"         "civreg##method"}{...}
@@ -9,7 +9,8 @@
 {viewerjumpto "References"     "civreg##references"}{...}
 {viewerjumpto "Author"         "civreg##author"}{...}
 
-help for {helpb civreg}{right:Manh Hoang-Ba (hbmanh9492@gmail)}
+help for {helpb civreg}{right:Manh Hoang-Ba (hbmanh9492@gmail, {browse "https://www.youtube.com/@manhb.econometrics":Youtube}, {browse "https://www.facebook.com/ManhHB94/":Facebook}, {browse "https://manhb94econometrics.wordpress.com":Website})}
+
 
 {title:Title}
 
@@ -42,7 +43,10 @@ Most options supported by {helpb ivreg2} may also be specified.
 {synopt:{opt dmax(#)}}upper bound (angle measured in degrees) for the search over {it:d0}; default is {cmd:dmax(70)}{p_end}
 {synopt:{opt reps(#)}}bootstrap replications used to select optimal {it:d0}; default is {cmd:reps(50)}{p_end}
 {synopt:{opt plus:rand}}specifies that an independent random disturbance with zero mean
-and variance equal to the variance of the endogenous variable is added to the SIV variable.{p_end}
+and variance equal to the variance of the endogenous variable is added to the CIV variable.{p_end}
+{synopt:{opt cgr:aph}}display covariance and correlation graphs of squared first-stage residuals and CIV used in determining the direction of endogeneity{p_end}
+{synopt:{opt saveg:raph}}save the covariance and correlation graphs produced by {opt cgraph}{p_end}
+{synopt:{opt gp:refix(name)}}specify the prefix used for naming graphs saved with {opt savegraph}{p_end}
 {synopt:{opt rcode}}uses R programming language (via {helpb rcall}) for random number generation to exactly reproduce R results{p_end}
 
 {syntab:FE options}
@@ -246,6 +250,17 @@ distribution functions and the Anderson-Darling statistic.{p_end}
 {phang}
 {opt reps(#)} specifies the number of bootstrap replications used to
 obtain the optimal {it:d0}.
+
+{phang}
+{opt cgraph} displays covariance and correlation graphs of squared first-stage residuals and the CIV under both assumed directions of endogeneity, 
+{cmd:cov(u,x)>0} and {cmd:cov(u,x)<0}, for each endogenous variable being evaluated.{p_end}
+
+{phang}
+{opt savegraph} saves the covariance and correlation graphs generated under each assumed direction of endogeneity. By default, graphs are saved as {it:[direction]}{cmd:_e2_}{it:[varname]}{cmd:.gph}, 
+where {it:direction} is {cmd:pos} or {cmd:neg} and {it:varname} is the name of the endogenous variable.{p_end}
+
+{phang}
+{opt gprefix(name)} specifies a prefix to be added to the default graph filename when {opt savegraph} is specified. For example, {cmd:gprefix(myproj_)} produces graph filenames such as {cmd:myproj_pos_e2_x.gph} and {cmd:myproj_neg_e2_x.gph}.{p_end}
 
 {phang}
 {opt rcode} requests random number generation through R programming
